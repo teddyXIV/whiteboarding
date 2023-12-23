@@ -1,0 +1,39 @@
+Function only takes a string as a parameter;
+Function should return a string;
+Assume the there are no spaces in the string;
+Example input: "aaabbbcdd";
+Expected output: 3a3bc2d;
+
+
+
+const compression = (string) => {
+    let count = 0;
+    let outputString = "";
+    for (let i = 0; i < string.length; i++) {
+        if (string[i] === string[i + 1]) {
+            count++
+        } else {
+            if (count === 0) {
+                outputString = outputString + string[i];
+            } else {
+                outputString = outputString + (count + 1) + string[i];
+                count = 0;
+            }
+        }
+    }
+    return outputString;
+}
+
+const recursiveCompression = (string, i = 0, outputString = "", count = 0) => {
+    if (i >= string.length) {
+        return outputString
+    } else if (string[i] === string[i + 1]) {
+        return recursiveCompression(string, i + 1, outputString, count + 1)
+    } else {
+        if (count === 0) {
+            return recursiveCompression(string, i + 1, outputString + string[i], 0)
+        } else {
+            return recursiveCompression(string, i + 1, outputString + (count + 1) + string[i], 0)
+        }
+    }
+}
